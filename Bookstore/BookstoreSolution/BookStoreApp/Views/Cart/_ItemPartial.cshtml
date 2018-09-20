@@ -1,0 +1,25 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model BookStoreApp.Models.Book
+
+<tbody>
+    <tr>
+        <td data-th="Product">
+            <div class="row">
+                <div class="col-sm-10">
+                    <h4 class="nomargin">@Html.DisplayNameFor(model => model.Title)</h4>
+                </div>
+            </div>
+        </td>
+        <td data-th="Price">@Html.DisplayNameFor(model => model.Price)</td>
+        <td data-th="Quantity">
+            <input type="number" class="form-control text-center" value="1">
+        </td>
+        <td data-th="Subtotal" class="text-center">1.99</td>
+        <td class="actions" data-th="">
+            <button class="btn btn-danger btn-md"><i class="glyphicon glyphicon-remove-circle"></i></button>
+        </td>
+    </tr>
+</tbody>

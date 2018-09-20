@@ -67,7 +67,7 @@
                             </td>
                             <td>
 
-                                <a href="@Url.Action("Edit", "Edit")" class="btn btn-primary">
+                                <a href="@Url.Action("Reserve", "Reserve", new { item.Author, item.Title, item.InStock})" class="btn btn-primary">
                                     <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
                                 </a>
 

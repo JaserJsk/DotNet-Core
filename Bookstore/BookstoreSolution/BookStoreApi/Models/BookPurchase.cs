@@ -5,10 +5,14 @@ using System.Threading.Tasks;
 
 namespace BookStoreApi.Models
 {
-    public class Item
+    public class BookPurchase
     {
-        public int Quantity { get; set; }
-
+        public BookPurchase(Book b, int r)
+        {
+            book = b;
+            reserved = r;
+        }
         public Book book { get; set; }
+        public int reserved { get; set; }
     }
 }

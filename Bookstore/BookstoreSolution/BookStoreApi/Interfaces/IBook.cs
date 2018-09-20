@@ -11,5 +11,10 @@ namespace BookStoreApi.Interfaces
         List<Book> GetAllBooks();
         Book GetByTitle(string title);
         Book GetByAuthor(string author);
+        Book GetByAuthorAndTitle(string author, string title);
+        BookPurchase ReserveCount(string author, string title, int count);
+        BookPurchase TryReserveCount(string author, string title, int count);
+        BookPurchase UnreserveCount(BookPurchase theBook, int count);
+        BookPurchase TryUnreserveCount(BookPurchase theBook, int count);
     }
 }

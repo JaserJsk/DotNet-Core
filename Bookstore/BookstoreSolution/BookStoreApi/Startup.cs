@@ -30,6 +30,10 @@ namespace BookStoreApi
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddTransient<IBook, BookService>();
+
+            // for session
+            services.AddDistributedMemoryCache();
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,6 +49,8 @@ namespace BookStoreApi
             }
 
             app.UseHttpsRedirection();
+            // for session
+            app.UseSession();
             app.UseMvc();
         }
     }
