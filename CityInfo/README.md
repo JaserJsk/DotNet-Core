@@ -1,4 +1,4 @@
-### Tutorial App
+### Tutorial Project
 This API will send HTTP Requests.
 
 ---
