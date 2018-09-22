@@ -10,23 +10,27 @@ namespace CityInfo.API.Controllers
     [Route("api/cities")]
     public class CitiesController : Controller
     {
+        #region GetCities
         [HttpGet()]
         public IActionResult GetCities()
         {
             return Ok(CitiesDataStore.Current.Cities);
         }
+        #endregion
 
-        [HttpGet("{id}")]
-        public IActionResult GetCity(int id)
+        #region GetCity
+        [HttpGet("{cityid}")]
+        public IActionResult GetCity(int cityid)
         {
-            var cityToReturn = CitiesDataStore.Current.Cities.FirstOrDefault(c => c.Id == id);
+            // Find city
+            var cityToReturn = CitiesDataStore.Current.Cities.FirstOrDefault(c => c.Id == cityid);
             if (cityToReturn == null)
             {
                 return NotFound();
             }
 
             return Ok(cityToReturn);
-                    
-        }
+        } 
+        #endregion
     }
 }

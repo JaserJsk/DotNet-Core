@@ -10,10 +10,11 @@ using System.Threading.Tasks;
 namespace CityInfo.API.Controllers
 {
     [Route("api/cities")]
-    public class PointOfInterestController : Controller
+    public class PointsOfInterestController : Controller
     {
-        [HttpGet()]
-        public IActionResult GetPointOfInterest(int cityId)
+        #region GetPointsOfInterest
+        [HttpGet("{cityId}/pointsofinterest")]
+        public IActionResult GetPointsOfInterest(int cityId)
         {
             var city = CitiesDataStore.Current.Cities.FirstOrDefault(c => c.Id == cityId);
 
@@ -22,9 +23,11 @@ namespace CityInfo.API.Controllers
                 return NotFound();
             }
 
-            return Ok(city.PointOfInterest);
+            return Ok(city.PointsOfInterest);
         }
+        #endregion
 
+        #region GetPointOfInterest Name = "GetPointOfInterest"
         [HttpGet("{cityId}/pointsofinterest/{id}", Name = "GetPointOfInterest")]
         public IActionResult GetPointOfInterest(int cityId, int id)
         {
@@ -35,18 +38,20 @@ namespace CityInfo.API.Controllers
                 return NotFound();
             }
 
-            var interest = city.PointOfInterest.FirstOrDefault(p => p.Id == id);
+            var pointOfInterest = city.PointsOfInterest.FirstOrDefault(p => p.Id == id);
 
-            if (interest == null)
+            if (pointOfInterest == null)
             {
                 return NotFound();
             }
 
-            return Ok(interest);
+            return Ok(pointOfInterest);
         }
+        #endregion
 
+        #region CreatePointOfInterest
         [HttpPost("{cityId}/pointsofinterest")]
-        public IActionResult CreatePointOfInterest(int cityId, 
+        public IActionResult CreatePointOfInterest(int cityId,
             [FromBody] PointOfInterestForCreationDto pointOfInterest)
         {
             if (pointOfInterest == null)
@@ -56,7 +61,7 @@ namespace CityInfo.API.Controllers
 
             if (pointOfInterest.Description == pointOfInterest.Name)
             {
-                ModelState.AddModelError("Description", "The provided description should be different from the name");
+                ModelState.AddModelError("Description", "The provided description should be different from the name.");
             }
 
             if (!ModelState.IsValid)
@@ -65,6 +70,7 @@ namespace CityInfo.API.Controllers
             }
 
             var city = CitiesDataStore.Current.Cities.FirstOrDefault(c => c.Id == cityId);
+
             if (city == null)
             {
                 return NotFound();
@@ -72,7 +78,7 @@ namespace CityInfo.API.Controllers
 
             // Calculate the ID by running to all points of Interests across cities and geting the highest value.
             var maxPointOfInterestId = CitiesDataStore.Current.Cities.SelectMany(
-                c => c.PointOfInterest).Max(p => p.Id);
+                             c => c.PointsOfInterest).Max(p => p.Id);
 
             // Get the highest value and add one.
             var finalPointOfInterest = new PointOfInterestDto()
@@ -82,14 +88,14 @@ namespace CityInfo.API.Controllers
                 Description = pointOfInterest.Description
             };
 
-            city.PointOfInterest.Add(finalPointOfInterest);
+            city.PointsOfInterest.Add(finalPointOfInterest);
 
             return CreatedAtRoute("GetPointOfInterest", new
-            {
-                cityId = cityId, id = finalPointOfInterest.Id
-            }, finalPointOfInterest);
+            { cityId = cityId, id = finalPointOfInterest.Id }, finalPointOfInterest);
         }
+        #endregion
 
+        #region UpdatePointOfInterest
         [HttpPut("{cityId}/pointsofinterest/{id}")]
         public IActionResult UpdatePointOfInterest(int cityId, int id,
             [FromBody] PointOfInterestForUpdateDto pointOfInterest)
@@ -101,7 +107,7 @@ namespace CityInfo.API.Controllers
 
             if (pointOfInterest.Description == pointOfInterest.Name)
             {
-                ModelState.AddModelError("Description", "The provided description should be different from the name");
+                ModelState.AddModelError("Description", "The provided description should be different from the name.");
             }
 
             if (!ModelState.IsValid)
@@ -110,12 +116,15 @@ namespace CityInfo.API.Controllers
             }
 
             var city = CitiesDataStore.Current.Cities.FirstOrDefault(c => c.Id == cityId);
+
             if (city == null)
             {
                 return NotFound();
             }
 
-            var pointOfInterestFromStore = city.PointOfInterest.FirstOrDefault(p => p.Id == id);
+            var pointOfInterestFromStore = city.PointsOfInterest.FirstOrDefault(p =>
+            p.Id == id);
+
             if (pointOfInterestFromStore == null)
             {
                 return NotFound();
@@ -127,7 +136,9 @@ namespace CityInfo.API.Controllers
             // Means that the request completed successfully but there is nothing to return
             return NoContent();
         }
+        #endregion
 
+        #region PartiallyUpdatePointOfInterest
         [HttpPatch("{cityId}/pointsofinterest/{id}")]
         public IActionResult PartiallyUpdatePointOfInterest(int cityId, int id,
             [FromBody] JsonPatchDocument<PointOfInterestForUpdateDto> patchDoc)
@@ -143,18 +154,18 @@ namespace CityInfo.API.Controllers
                 return NotFound();
             }
 
-            var pointOfInterestFromStore = city.PointOfInterest.FirstOrDefault(p => p.Id == id);
+            var pointOfInterestFromStore = city.PointsOfInterest.FirstOrDefault(c => c.Id == id);
             if (pointOfInterestFromStore == null)
             {
                 return NotFound();
             }
 
             var pointOfInterestToPatch =
-                new PointOfInterestForUpdateDto()
-                {
-                    Name = pointOfInterestFromStore.Name,
-                    Description = pointOfInterestFromStore.Description
-                };
+                   new PointOfInterestForUpdateDto()
+                   {
+                       Name = pointOfInterestFromStore.Name,
+                       Description = pointOfInterestFromStore.Description
+                   };
 
             patchDoc.ApplyTo(pointOfInterestToPatch, ModelState);
 
@@ -165,7 +176,7 @@ namespace CityInfo.API.Controllers
 
             if (pointOfInterestToPatch.Description == pointOfInterestToPatch.Name)
             {
-                ModelState.AddModelError("Description", "The provided description should be different from the name");
+                ModelState.AddModelError("Description", "The provided description should be different from the name.");
             }
 
             TryValidateModel(pointOfInterestToPatch);
@@ -181,7 +192,9 @@ namespace CityInfo.API.Controllers
             // Means that the request completed successfully but there is nothing to return
             return NoContent();
         }
+        #endregion
 
+        #region DeletePointOfInterest
         [HttpDelete("{cityId}/pointsofinterest/{id}")]
         public IActionResult DeletePointOfInterest(int cityId, int id)
         {
@@ -191,16 +204,17 @@ namespace CityInfo.API.Controllers
                 return NotFound();
             }
 
-            var pointOfInterestFromStore = city.PointOfInterest.FirstOrDefault(p => p.Id == id);
+            var pointOfInterestFromStore = city.PointsOfInterest.FirstOrDefault(c => c.Id == id);
             if (pointOfInterestFromStore == null)
             {
                 return NotFound();
             }
 
-            city.PointOfInterest.Remove(pointOfInterestFromStore);
+            city.PointsOfInterest.Remove(pointOfInterestFromStore);
 
             // Means that the request completed successfully but there is nothing to return
             return NoContent();
-        }
+        } 
+        #endregion
     }
 }

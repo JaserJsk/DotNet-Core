@@ -18,7 +18,7 @@ namespace CityInfo.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc()
-                .AddMvcOptions(o => 
+                .AddMvcOptions(o =>
                     o.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter()))
 
                 .AddJsonOptions(o =>
@@ -41,7 +41,6 @@ namespace CityInfo.API
             }
 
             app.UseStatusCodePages();
-
             app.UseMvc();
 
             //app.Run(async (context) =>
