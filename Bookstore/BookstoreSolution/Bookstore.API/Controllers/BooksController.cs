@@ -102,7 +102,7 @@ namespace Bookstore.API.Controllers
 
             var createdBookToReturn = Mapper.Map<Models.BookDto>(finalBook);
 
-            return CreatedAtRoute("GetPointOfInterest", new
+            return CreatedAtRoute("GetBook", new
             { cityId = authorid, id = createdBookToReturn.Id }, createdBookToReturn);
         }
         #endregion

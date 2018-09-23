@@ -32,7 +32,7 @@ namespace Bookstore.API.Controllers
         }
         #endregion
 
-        #region GET [ GetCity ]
+        #region GET [ GetAuthor ]
         [HttpGet("{authorid}")]
         public IActionResult GetAuthor(int authorid, bool includeBook = false)
         {
