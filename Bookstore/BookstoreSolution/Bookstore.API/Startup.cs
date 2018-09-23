@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CityInfo.API.Entities;
-using CityInfo.API.Services;
+using Bookstore.API.Entities;
+using Bookstore.API.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -15,7 +15,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
 using NLog.Extensions.Logging;
 
-namespace CityInfo.API
+namespace Bookstore.API
 {
     public class Startup
     {
@@ -49,13 +49,13 @@ namespace CityInfo.API
 #else
             services.AddTransient<IMailService, CloudMailService>();
 #endif
-            var connectionString = Startup.Configuration["connectionStrings:CityInfoDBConnectionString"];
-            services.AddDbContext<CityInfoContext>(o => o.UseSqlServer(connectionString));
+            var connectionString = Startup.Configuration["connectionStrings:BookstoreDBConnectionString"];
+            services.AddDbContext<BookstoreContext>(o => o.UseSqlServer(connectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory,
-            CityInfoContext cityInfoContext)
+            BookstoreContext cityInfoContext)
         {
             //loggerFactory.AddConsole();
             //loggerFactory.AddDebug();
@@ -67,7 +67,7 @@ namespace CityInfo.API
             }
 
             // Add seed data to database.
-            cityInfoContext.EnsureSeedDataForContext();
+            //BookstoreContext.EnsureSeedDataForContext();
 
             app.UseStatusCodePages();
             app.UseMvc();
