@@ -1,4 +1,7 @@
-﻿using CityInfo.API.Data;
+﻿using AutoMapper;
+using CityInfo.API.Data;
+using CityInfo.API.Interfaces;
+using CityInfo.API.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,27 +13,46 @@ namespace CityInfo.API.Controllers
     [Route("api/cities")]
     public class CitiesController : Controller
     {
-        #region GetCities
+        private ICityInfoRepository _cityInfoRepository;
+
+        public CitiesController(ICityInfoRepository cityInfoRepository)
+        {
+            _cityInfoRepository = cityInfoRepository;
+        }
+
+        #region GET [ GetCities ]
         [HttpGet()]
         public IActionResult GetCities()
         {
-            return Ok(CitiesDataStore.Current.Cities);
+            var cityEntities = _cityInfoRepository.GetCities();
+            var results = Mapper.Map<IEnumerable<CityWithoutPointOfInterestDto>>(cityEntities);
+
+            return Ok(results);
         }
         #endregion
 
-        #region GetCity
+        #region GET [ GetCity ]
         [HttpGet("{cityid}")]
-        public IActionResult GetCity(int cityid)
+        public IActionResult GetCity(int cityid, bool includePointsOfInterest = false)
         {
-            // Find city
-            var cityToReturn = CitiesDataStore.Current.Cities.FirstOrDefault(c => c.Id == cityid);
-            if (cityToReturn == null)
+            var city = _cityInfoRepository.GetCity(cityid, includePointsOfInterest);
+
+            if (city == null)
             {
                 return NotFound();
             }
 
-            return Ok(cityToReturn);
-        } 
+            if (includePointsOfInterest)
+            {
+                var cityResult = Mapper.Map<IEnumerable<CityDto>>(city);
+
+                return Ok(cityResult);
+            }
+
+            var cityWithoutPointsOfInterestResult = Mapper.Map<CityWithoutPointOfInterestDto>(city);
+
+            return Ok(cityWithoutPointsOfInterestResult); 
+        }
         #endregion
     }
 }

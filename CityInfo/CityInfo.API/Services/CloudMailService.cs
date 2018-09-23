@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using CityInfo.API.Interfaces;
 
 namespace CityInfo.API.Services
 {
