@@ -18,7 +18,7 @@ namespace Bookstore.API.Entities
         public string Title { get; set; }
 
         [Required]
-        public decimal Price { get; set; }
+        public double Price { get; set; }
 
         public int Stock { get; set; }
 

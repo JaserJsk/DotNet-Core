@@ -15,10 +15,12 @@ namespace CityInfo.API.Controllers
     {
         private ICityInfoRepository _cityInfoRepository;
 
+        #region Constructor
         public CitiesController(ICityInfoRepository cityInfoRepository)
         {
             _cityInfoRepository = cityInfoRepository;
-        }
+        } 
+        #endregion
 
         #region GET [ GetCities ]
         [HttpGet()]

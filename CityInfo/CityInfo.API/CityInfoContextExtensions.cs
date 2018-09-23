@@ -26,13 +26,16 @@ namespace CityInfo.API
                     {
                         new PointOfInterest() {
                             Name = "Stockholm Old Town",
-                            Description = "The Old Town, unsurprisingly, is the oldest part of Stockholm." },
+                            Description = "The Old Town, unsurprisingly, is the oldest part of Stockholm."
+                        },
                         new PointOfInterest() {
                             Name = "Vasa Museum",
-                            Description = "Today Vasa is the world's only preserved 17th century ship." },
+                            Description = "Today Vasa is the world's only preserved 17th century ship."
+                        },
                         new PointOfInterest() {
                             Name = "Stockholm City Hall",
-                            Description = "The Stockholm City Hall is one of the capital's most visited tourist attractions." }
+                            Description = "The Stockholm City Hall is one of the capital's most visited tourist attractions."
+                        }
                     }
                 },
                 new City()
@@ -43,13 +46,16 @@ namespace CityInfo.API
                     {
                         new PointOfInterest() {
                             Name = "Southern Goteborg Archipelago",
-                            Description = "The archipelago of Gothenburg stretches along the coast like a string of pearls." },
+                            Description = "The archipelago of Gothenburg stretches along the coast like a string of pearls."
+                        },
                         new PointOfInterest() {
                             Name = "Aeroseum",
-                            Description = "Aeroseum is an experience center with the ambition to describe the development of the aircraft, both civilian and military." },
+                            Description = "Aeroseum is an experience center with the ambition to describe the development of the aircraft, both civilian and military."
+                        },
                         new PointOfInterest() {
                             Name = "Botanical Garden",
-                            Description = "The Garden is situated in a formerly completely rural area, where earlier a great country estate was located." }
+                            Description = "The Garden is situated in a formerly completely rural area, where earlier a great country estate was located."
+                        }
                     }
                 },
                 new City()
@@ -60,13 +66,16 @@ namespace CityInfo.API
                     {
                         new PointOfInterest() {
                             Name = "Oresund Bridge",
-                            Description = "The bridge is a combined railway and motorway across the Øresund strait between Sweden and Denmark." },
+                            Description = "The bridge is a combined railway and motorway across the Øresund strait between Sweden and Denmark."
+                        },
                         new PointOfInterest() {
                             Name = "Turning Torso",
-                            Description = "It is regarded as the first twisted skyscraper in the world." },
+                            Description = "It is regarded as the first twisted skyscraper in the world."
+                        },
                         new PointOfInterest() {
                             Name = "City Library",
-                            Description = "A municipal public library in Malmö, Sweden, which opened December 12, 1905." }
+                            Description = "A municipal public library in Malmö, Sweden, which opened December 12, 1905."
+                        }
                     }
                 }
             };

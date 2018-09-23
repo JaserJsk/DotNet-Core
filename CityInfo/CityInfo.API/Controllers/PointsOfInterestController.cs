@@ -19,6 +19,7 @@ namespace CityInfo.API.Controllers
         private IMailService _mailService;
         private ICityInfoRepository _cityInfoRepository;
 
+        #region Constructor
         public PointsOfInterestController(ILogger<PointsOfInterestController> logger,
             IMailService mailService,
             ICityInfoRepository cityInfoRepository)
@@ -26,7 +27,8 @@ namespace CityInfo.API.Controllers
             _logger = logger;
             _mailService = mailService;
             _cityInfoRepository = cityInfoRepository;
-        }
+        } 
+        #endregion
 
         #region GET [ GetPointsOfInterest ]
         [HttpGet("{cityId}/pointsofinterest")]

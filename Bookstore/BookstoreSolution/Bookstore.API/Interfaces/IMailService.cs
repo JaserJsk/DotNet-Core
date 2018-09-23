@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Bookstore.API.Services
+namespace Bookstore.API.Interfaces
 {
     public interface IMailService
     {

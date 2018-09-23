@@ -17,7 +17,7 @@ namespace Bookstore.API.Entities
         [MaxLength(50)]
         public string AuthorName { get; set; }
 
-        public ICollection<Book> Books { get; set; }
+        public ICollection<Book> Book { get; set; }
 
         // Initialize an empty list to avoid Null reference exception when trying to manipulate 
         // list when points of interest have not loaded yet.

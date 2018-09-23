@@ -12,10 +12,12 @@ namespace CityInfo.API.Services
     {
         private CityInfoContext _context;
 
+        #region Constructor
         public CityInfoRepository(CityInfoContext context)
         {
             _context = context;
-        }
+        } 
+        #endregion
 
         #region CityExists
         public bool CityExists(int cityId)

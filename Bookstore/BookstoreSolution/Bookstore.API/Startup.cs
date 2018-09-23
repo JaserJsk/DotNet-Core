@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Bookstore.API.Entities;
+using Bookstore.API.Interfaces;
 using Bookstore.API.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -51,11 +52,13 @@ namespace Bookstore.API
 #endif
             var connectionString = Startup.Configuration["connectionStrings:BookstoreDBConnectionString"];
             services.AddDbContext<BookstoreContext>(o => o.UseSqlServer(connectionString));
+
+            services.AddScoped<IBookRepository, BookRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory,
-            BookstoreContext cityInfoContext)
+            BookstoreContext bookstoreContext)
         {
             //loggerFactory.AddConsole();
             //loggerFactory.AddDebug();
@@ -67,15 +70,23 @@ namespace Bookstore.API
             }
 
             // Add seed data to database.
-            //BookstoreContext.EnsureSeedDataForContext();
+            bookstoreContext.EnsureSeedDataForContext();
 
             app.UseStatusCodePages();
-            app.UseMvc();
 
-            //app.Run(async (context) =>
-            //{
-            //    await context.Response.WriteAsync("Hello World!");
-            //});
+            AutoMapper.Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<Entities.Author, Models.AuthorWithoutBookDto>();
+                cfg.CreateMap<Entities.Author, Models.AuthorDto>();
+                cfg.CreateMap<Entities.Book, Models.BookDto>();
+
+                cfg.CreateMap<Models.BookForCreationDto, Entities.Book>();
+                cfg.CreateMap<Models.BookForUpdateDto, Entities.Book>();
+
+                cfg.CreateMap<Entities.Book, Models.BookForUpdateDto>();
+            });
+
+            app.UseMvc();
         }
     }
 }
