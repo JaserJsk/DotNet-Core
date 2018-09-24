@@ -26,12 +26,32 @@ namespace Bookstore.API.Controllers
             _logger = logger;
             _mailService = mailService;
             _bookRepository = bookRepository;
-        } 
+        }
         #endregion
 
-        #region GET [ GetBooks ]
+        #region GET [ GetAllBooks ]
+        [HttpGet("books")]
+        public IActionResult GetAllBooks()
+        {
+            try
+            {
+                var allBooks = _bookRepository.GetAllBooks();
+
+                var allBooksResults = Mapper.Map<IEnumerable<BookWithAuthorDto>>(allBooks);
+
+                return Ok(allBooksResults);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"Exeption while getting all books from all authors", ex);
+                return StatusCode(500, "A problem happend while handeling your request.");
+            }
+        }
+        #endregion
+
+        #region GET [ GetBooksById ]
         [HttpGet("{authorid}/books")]
-        public IActionResult GetBooks(int authorid)
+        public IActionResult GetBooksById(int authorid)
         {
             try
             {
@@ -50,26 +70,6 @@ namespace Bookstore.API.Controllers
             catch (Exception ex)
             {
                 _logger.LogInformation($"Exeption while getting book for author with id {authorid}.", ex);
-                return StatusCode(500, "A problem happend while handeling your request.");
-            }
-        }
-        #endregion
-
-        #region GET [ GetAllBooks ]
-        [HttpGet("books")]
-        public IActionResult GetAllBooks()
-        {
-            try
-            {
-                var allBooks = _bookRepository.GetAllBooks();                                
-
-                var allBooksResults = Mapper.Map<IEnumerable<BookWithAuthorDto>>(allBooks);
-
-                return Ok(allBooksResults);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogInformation($"Exeption while getting all books from all authors", ex);
                 return StatusCode(500, "A problem happend while handeling your request.");
             }
         }
