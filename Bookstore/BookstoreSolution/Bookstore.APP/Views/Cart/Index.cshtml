@@ -39,12 +39,12 @@
                         </td>
                         <td data-th="Price">$@item.apiBook.Price</td>
                         <td data-th="Quantity">
-                            @item.count
+                            @item.Count
                         </td>
                         @{
-                            totalPrice += (double)item.apiBook.Price * (double)item.count;
+                            totalPrice += (double)item.apiBook.Price * (double)item.Count;
                         }
-                        <td data-th="Subtotal" class="text-center">$@(item.apiBook.Price * item.count)</td>
+                        <td data-th="Subtotal" class="text-center">$@(item.apiBook.Price * item.Count)</td>
                         <td class="actions" data-th="">
                             <a asp-controller="cart" asp-action="Remove" asp-route-id="@item.apiBook.Id">
                                 <span class="btn btn-danger btn-md glyphicon glyphicon-remove-circle" aria-hidden="true"></span>

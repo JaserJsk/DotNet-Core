@@ -7,8 +7,8 @@ namespace Bookstore.APP.Models
 {
     public class CartPageModel
     {
-        public ApiBook apiBook { get; set; }
+        public int Count { get; set; }
 
-        public int count { get; set; }
+        public ApiBook apiBook { get; set; }
     }
 }

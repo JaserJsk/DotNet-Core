@@ -18,13 +18,13 @@ namespace Bookstore.APP.Models
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri("https://localhost:44315/");
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            var apiroute = "api/authors/books";
-            HttpResponseMessage response = client.GetAsync(apiroute).Result;
+            var apiRoute = "api/authors/books";
+            HttpResponseMessage response = client.GetAsync(apiRoute).Result;
 
-            var book = response.Content.ReadAsAsync<IEnumerable<ApiBook>>().Result;
-            this.Books = book;
+            var fetchedBook = response.Content.ReadAsAsync<IEnumerable<ApiBook>>().Result;
+            this.ApiFetchedBooks = fetchedBook;
         }
 
-        public IEnumerable<ApiBook> Books { get; set; }
+        public IEnumerable<ApiBook> ApiFetchedBooks { get; set; }
     }
 }

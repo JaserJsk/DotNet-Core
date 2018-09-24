@@ -18,7 +18,7 @@ namespace Bookstore.APP.Controllers
             if (cart != null)
             {
                 ViewBag.cart = cart;
-                ViewBag.total = cart.Sum(item => item.apiBook.Price * item.count);
+                ViewBag.total = cart.Sum(item => item.apiBook.Price * item.Count);
             }
             else
             {
@@ -72,7 +72,7 @@ namespace Bookstore.APP.Controllers
         [Route("Cart/Query/{id}/{added}")]
         public bool Query(int id, int added)
         {
-            ApiBook thebook = new ApiGetBooks().Books.Where(b => b.Id == id).FirstOrDefault();
+            ApiBook thebook = new ApiGetBooks().ApiFetchedBooks.Where(b => b.Id == id).FirstOrDefault();
             int index = isExist(id);
             if (index == -1)
             {
@@ -84,7 +84,7 @@ namespace Bookstore.APP.Controllers
             else
             {
                 List<CartPageModel> cart = SessionHelper.GetObjectFromJson<List<CartPageModel>>(HttpContext.Session, "cart");
-                if (thebook != null && thebook.Stock >= added + cart[index].count)
+                if (thebook != null && thebook.Stock >= added + cart[index].Count)
                 {
                     return true;
                 }
@@ -114,10 +114,10 @@ namespace Bookstore.APP.Controllers
             if (SessionHelper.GetObjectFromJson<List<CartPageModel>>(HttpContext.Session, "cart") == null)
             {
                 List<CartPageModel> cart = new List<CartPageModel>();
-                ApiBook thebook = new ApiGetBooks().Books.Where(b => b.Id == id).FirstOrDefault();
+                ApiBook thebook = new ApiGetBooks().ApiFetchedBooks.Where(b => b.Id == id).FirstOrDefault();
                 if (thebook != null && thebook.Stock >= added)
                 {
-                    cart.Add(new CartPageModel { apiBook = thebook, count = added });
+                    cart.Add(new CartPageModel { apiBook = thebook, Count = added });
                 }
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             }
@@ -128,18 +128,18 @@ namespace Bookstore.APP.Controllers
                 ApiBook thebook;
                 if (index != -1)
                 {
-                    thebook = new ApiGetBooks().Books.Where(b => b.Id == id).FirstOrDefault();
-                    if (thebook != null && thebook.Stock >= added + cart[index].count)
+                    thebook = new ApiGetBooks().ApiFetchedBooks.Where(b => b.Id == id).FirstOrDefault();
+                    if (thebook != null && thebook.Stock >= added + cart[index].Count)
                     {
-                        cart[index].count += added;
+                        cart[index].Count += added;
                     }
                 }
                 else
                 {
-                    thebook = new ApiGetBooks().Books.Where(b => b.Id == id).FirstOrDefault();
+                    thebook = new ApiGetBooks().ApiFetchedBooks.Where(b => b.Id == id).FirstOrDefault();
                     if (thebook != null && thebook.Stock >= added)
                     {
-                        cart.Add(new CartPageModel { apiBook = thebook, count = added });
+                        cart.Add(new CartPageModel { apiBook = thebook, Count = added });
                     }
                 }
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);

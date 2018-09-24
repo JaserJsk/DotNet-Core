@@ -7,10 +7,10 @@ namespace Bookstore.APP.Models
 {
     public class BookPageModel
     {
-        public IEnumerable<ApiBook> ApiBooks { get; set; }
-
         public string searchTerm { get; set; }
 
         public string searchType { get; set; }
+
+        public IEnumerable<ApiBook> ApiBooks { get; set; }
     }
 }
