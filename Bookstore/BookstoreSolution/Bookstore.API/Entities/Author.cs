@@ -17,6 +17,12 @@ namespace Bookstore.API.Entities
         [MaxLength(50)]
         public string AuthorName { get; set; }
 
+        override
+        public string ToString()
+        {
+            return AuthorName;
+        }
+
         public ICollection<Book> Book { get; set; }
 
         // Initialize an empty list to avoid Null reference exception when trying to manipulate 

@@ -1,7 +1,22 @@
-﻿
+﻿@model Bookstore.APP.Models.BookPageModel
 @{
     ViewData["Title"] = "Index";
+    ViewData["titleselected"] = "";
+    ViewData["authorselected"] = "";
+    if (Model.searchType == "title")
+    {
+        ViewData["titleselected"] = "selected";
+    }
+    else if (Model.searchType == "author")
+    {
+        ViewData["authorselected"] = "selected";
+    }
 }
+
+<!--<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>-->
+<script src="~/js/bundled.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
 
 <div class="container">
     <div class="row">
@@ -11,24 +26,138 @@
         <br />
 
         <div class="col-xs-12">
-            <div class="input-group">
-                <div class="input-group-btn search-panel">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                        <span id="search_concept">Search by</span> <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="#contains">Title</a></li>
-                        <li><a href="#its_equal">Author</a></li>
-                    </ul>
+            <form method="get" action="/Book">
+                <div class="input-group">
+                    <div class="input-group-btn search-panel">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <span id="search_concept">Search by</span>
+                        </button>
+
+                    </div>
+                    <input type="hidden" name="search_param" value="all" id="search_param">
+                    <input type="text" class="form-control" name="x" placeholder="Author or Title..." value="@Model.searchTerm">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+                    </span>
                 </div>
-                <input type="hidden" name="search_param" value="all" id="search_param">
-                <input type="text" class="form-control" name="x" placeholder="Search term...">
-                <span class="input-group-btn">
-                    <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
-                </span>
-            </div>
+            </form>
+
+            <script>
+                $(document).ready(function () {
+                    $("#searchtype li").click(function () {
+                        $("#search_param").val($(this).attr("value"));
+                    });
+                });
+            </script>
 
             <br />
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Title
+                        </th>
+                        <th>
+                            Author
+                        </th>
+                        <th>
+                            Price
+                        </th>
+                        <th>
+                            Stock
+                        </th>
+                        <th>
+                            Purchase count
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        var index = 0;
+                        var pref = "addtocart";
+                        string n = pref + index;
+                        string theid = "";
+                        string thediv = "";
+                    }
+                    @foreach (var item in Model.ApiBooks)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Title)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Author)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Price)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Stock)
+                            </td>
+                            <td>
+                                @{
+                                    theid = "added" + item.Id;
+                                    thediv = "div" + item.Id;
+                                }
+                                <input id="@theid" class="addtocartcount" type="number" value="1" min="1" max="@item.Stock" style="width: 40px;" />
+
+                                <script>
+                                    $(document).ready(function (e) {
+                                        $('#@theid').bind('input', function (e) {
+                                            e.preventDefault();
+                                            $.ajax({
+                                                url: '/Cart/Notify/@item.Id/' + $('#@theid')[0].value,
+                                                type: 'post',
+                                                success: function () {
+                                                    //whatever you wanna do after the form is successfully submitted
+                                                }
+                                            });
+                                        });
+                                    });
+                                </script>
+
+                            </td>
+                            <td>
+
+                                <a id="@thediv" asp-controller="cart" asp-action="buy" asp-route-id="@item.Id" asp-route-added="1">
+                                    <span class="btn btn-primary glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
+                                </a>
+
+                                <script>
+                                    $(document).ready(function (e) {
+                                        $('#@thediv').bind('click', function (e) {
+                                            e.preventDefault();
+                                            $.ajax({
+                                                url: '/Cart/Query/@item.Id/' + $('#@theid')[0].value,
+                                                type: 'post',
+                                                success: function (result) {
+                                                    //whatever you wanna do after the form is successfully submitted
+                                                    if (result === true || result === 'true') {
+                                                        window.location.href = '/Cart/Buy/@item.Id/' + $('#@theid')[0].value;
+                                                    }
+                                                    else {
+                                                        alert('Stock is zero or already added to cart!');
+                                                    }
+                                                }
+                                            });
+                                        });
+                                    });
+                                </script>
+
+                            </td>
+
+                            @{
+                                index++;
+                                n = pref + index;
+                            }
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
 
         </div>
 
@@ -39,15 +168,15 @@
 @section scripts{
     <script type="text/javascript">
 
-        $(document).ready(function (e) {
-            $('.search-panel .dropdown-menu').find('a').click(function (e) {
-                e.preventDefault();
-                var param = $(this).attr("href").replace("#", "");
-                var concept = $(this).text();
-                $('.search-panel span#search_concept').text(concept);
-                $('.input-group #search_param').val(param);
-            });
-
+        $(".addtocart").click(function (event) {
+            var origel = $(event.target)[0];
+            var el = origel;
+            if (!(origel.nodeName.toLowerCase() === "button")) {
+                el = $(event.target)[0].parentElement;
+            }
+            var cnt = parseInt(el.getAttribute("bookid"));
+            var url = '/Cart/Reserve?author=' + el.getAttribute("bookauthor") + "&title=" + el.getAttribute("booktitle") + "&count=" + $('.addtocartcount')[cnt].value;
+            window.location.href = url;
         });
 
     </script>

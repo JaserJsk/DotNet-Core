@@ -50,6 +50,7 @@ namespace Bookstore.API
 #else
             services.AddTransient<IMailService, CloudMailService>();
 #endif
+            // Setting the connectionstring
             var connectionString = Startup.Configuration["connectionStrings:BookstoreDBConnectionString"];
             services.AddDbContext<BookstoreContext>(o => o.UseSqlServer(connectionString));
 
@@ -62,7 +63,7 @@ namespace Bookstore.API
         {
             //loggerFactory.AddConsole();
             //loggerFactory.AddDebug();
-            loggerFactory.AddNLog();
+            //loggerFactory.AddNLog();
 
             if (env.IsDevelopment())
             {
@@ -84,6 +85,7 @@ namespace Bookstore.API
                 cfg.CreateMap<Models.BookForUpdateDto, Entities.Book>();
 
                 cfg.CreateMap<Entities.Book, Models.BookForUpdateDto>();
+                cfg.CreateMap<Entities.Book, Models.BookWithAuthorDto>();
             });
 
             app.UseMvc();

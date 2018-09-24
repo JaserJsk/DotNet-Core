@@ -37,7 +37,7 @@ namespace Bookstore.API.Controllers
             {
                 if (!_bookRepository.AuthorExists(authorid))
                 {
-                    _logger.LogInformation($"City with id {authorid} was not found when accessing points of interest.");
+                    _logger.LogInformation($"Author with id {authorid} was not found when accessing books.");
                     return NotFound();
                 }
 
@@ -49,7 +49,87 @@ namespace Bookstore.API.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogInformation($"Exeption while getting points of interest for city with id {authorid}.", ex);
+                _logger.LogInformation($"Exeption while getting book for author with id {authorid}.", ex);
+                return StatusCode(500, "A problem happend while handeling your request.");
+            }
+        }
+        #endregion
+
+        #region GET [ GetAllBooks ]
+        [HttpGet("books")]
+        public IActionResult GetAllBooks()
+        {
+            try
+            {
+                var allBooks = _bookRepository.GetAllBooks();                                
+
+                var allBooksResults = Mapper.Map<IEnumerable<BookWithAuthorDto>>(allBooks);
+
+                return Ok(allBooksResults);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"Exeption while getting all books from all authors", ex);
+                return StatusCode(500, "A problem happend while handeling your request.");
+            }
+        }
+        #endregion
+
+        #region GET [ GetAllBooksByTitle ]
+        [HttpGet("books/search/title/{title}")]
+        public IActionResult GetAllBooksByTitle(string title)
+        {
+            try
+            {
+                var allBooks = _bookRepository.GetAllBooksByTitle(title);
+
+                var allBooksResults = Mapper.Map<IEnumerable<BookWithAuthorDto>>(allBooks);
+
+                return Ok(allBooksResults);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"Exeption while getting all books from all authors", ex);
+                return StatusCode(500, "A problem happend while handeling your request.");
+            }
+        }
+        #endregion
+
+        #region GET [ GetAllBooksByAuthor ]
+        [HttpGet("books/search/author/{author}")]
+        public IActionResult GetAllBooksByAuthor(string author)
+        {
+            try
+            {
+                var allBooks = _bookRepository.GetAllBooksByAuthor(author);
+
+                var allBooksResults = Mapper.Map<IEnumerable<BookWithAuthorDto>>(allBooks);
+
+                return Ok(allBooksResults);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"Exeption while getting all books from all authors", ex);
+                return StatusCode(500, "A problem happend while handeling your request.");
+            }
+        }
+        #endregion
+
+        #region GET [ GetAllBooksByTerm ]
+        [HttpGet("books/search/all/{term}")]
+        public IActionResult GetAllBooksByTerm(string term)
+        {
+            try
+            {
+                var allBooks = _bookRepository.GetAllBooksByTerm(term);
+
+                var allBooksResults = Mapper.Map<IEnumerable<BookWithAuthorDto>>(allBooks);
+
+                return Ok(allBooksResults);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"Exeption while getting all books from all authors", ex);
                 return StatusCode(500, "A problem happend while handeling your request.");
             }
         }
@@ -103,7 +183,7 @@ namespace Bookstore.API.Controllers
             var createdBookToReturn = Mapper.Map<Models.BookDto>(finalBook);
 
             return CreatedAtRoute("GetBook", new
-            { cityId = authorid, id = createdBookToReturn.Id }, createdBookToReturn);
+            { authorId = authorid, id = createdBookToReturn.Id }, createdBookToReturn);
         }
         #endregion
 

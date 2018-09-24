@@ -26,6 +26,92 @@ namespace Bookstore.API.Services
         }
         #endregion
 
+        #region GetAllBooks
+        public IEnumerable<Book> GetAllBooks()
+        {
+            var authors = this.GetAuthors();
+            List<Book> allBooks = new List<Book>();
+            foreach(var author in authors)
+            {
+                var authBooks = this.GetBookForAuthors(author.Id);
+                foreach(var oneBook in authBooks)
+                {
+                    oneBook.Author = author;
+                    allBooks.Add(oneBook);
+                }
+            }
+            return allBooks;
+        }
+        #endregion
+
+        #region GetAllBooksByTitle
+        public IEnumerable<Book> GetAllBooksByTitle(string title)
+        {
+            var authors = this.GetAuthors();
+            List<Book> allBooks = new List<Book>();
+            foreach (var author in authors)
+            {
+                var authBooks = this.GetBookForAuthors(author.Id);
+                foreach (var oneBook in authBooks)
+                {
+                    oneBook.Author = author;
+                    if (oneBook.Title.ToLower().Contains(title.ToLower()) ||
+                        oneBook.Title.Contains(title))
+                    {
+                        allBooks.Add(oneBook);
+                    }
+                }
+            }
+            return allBooks;
+        }
+
+        #region GetAllBooksByAuthor
+        public IEnumerable<Book> GetAllBooksByAuthor(string authorname)
+        {
+            var authors = this.GetAuthors();
+            List<Book> allBooks = new List<Book>();
+            foreach (var author in authors)
+            {
+                var authBooks = this.GetBookForAuthors(author.Id);
+                foreach (var oneBook in authBooks)
+                {
+                    oneBook.Author = author;
+                    if (oneBook.Author.AuthorName.ToLower().Contains(authorname.ToLower()) ||
+                        oneBook.Author.AuthorName.Contains(authorname))
+                    {
+                        allBooks.Add(oneBook);
+                    }
+                }
+            }
+            return allBooks;
+        }
+        #endregion
+
+        #region GetAllBooksByTerm
+        public IEnumerable<Book> GetAllBooksByTerm(string term)
+        {
+            var authors = this.GetAuthors();
+            List<Book> allBooks = new List<Book>();
+            foreach (var author in authors)
+            {
+                var authBooks = this.GetBookForAuthors(author.Id);
+                foreach (var oneBook in authBooks)
+                {
+                    oneBook.Author = author;
+                    if (oneBook.Author.AuthorName.ToLower().Contains(term.ToLower()) || 
+                        oneBook.Title.ToLower().Contains(term.ToLower()) ||
+                        oneBook.Author.AuthorName.Contains(term) ||
+                        oneBook.Title.Contains(term))
+                    {
+                        allBooks.Add(oneBook);
+                    }
+                }
+            }
+            return allBooks;
+        }
+        #endregion
+        #endregion
+
         #region GetAuthors
         public IEnumerable<Author> GetAuthors()
         {

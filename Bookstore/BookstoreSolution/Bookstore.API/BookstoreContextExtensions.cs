@@ -6,11 +6,29 @@ using System.Linq;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 using Bookstore.API.Helpers;
+using Bookstore.API.Models;
 
 namespace Bookstore.API
 {
     public static class BookstoreContextExtensions
-    {
+    {      
+        private static void AddAuthorFromBook(ref List<Author> authors, BookFromJSON book)
+        {
+            authors.Add(new Author()
+            {
+                AuthorName = book.Author,
+                Book = new List<Book>()
+                    {
+                        new Book()
+                        {
+                            Title = book.Title,
+                            Price = book.Price,
+                            Stock = book.InStock
+                        }
+                    }
+            });
+        }
+
         public static void EnsureSeedDataForContext(this BookstoreContext context)
         {
             if (context.Authors.Any())
@@ -18,80 +36,45 @@ namespace Bookstore.API
                 return;
             }
 
-            var authors = new List<Author>()
-            {
-                new Author()
-                {
-                    AuthorName = "Average Swede",
-                    Book = new List<Book>()
-                    {
-                        new Book() {
-                            Title = "Mastering åäö",
-                            Price = 762,
-                            Stock = 15
-                        }
-                    }
-                },
-                new Author()
-                {
-                    AuthorName = "Rich Block",
-                    Book = new List<Book>()
-                    {
-                        new Book() {
-                            Title = "How To Spend Money",
-                            Price = 1000000,
-                            Stock = 1
-                        },
-                        new Book() {
-                            Title = "Desired",
-                            Price = 564.5,
-                            Stock = 0
-                        }
-                    }
-                },
-                new Author()
-                {
-                    AuthorName = "First Author",
-                    Book = new List<Book>()
-                    {
-                        new Book() {
-                            Title = "Generic Title",
-                            Price = 185.5,
-                            Stock = 5
-                        }
-                    }
-                },
-                new Author()
-                {
-                    AuthorName = "Second Author",
-                    Book = new List<Book>()
-                    {
-                        new Book() {
-                            Title = "Generic Title",
-                            Price = 1748,
-                            Stock = 3
-                        }
-                    }
-                },
-                new Author()
-                {
-                    AuthorName = "Cunning Bastard",
-                    Book = new List<Book>()
-                    {
-                        new Book() {
-                            Title = "Random Sales",
-                            Price = 999,
-                            Stock = 20
-                        },
-                        new Book() {
-                            Title = "Random Sales",
-                            Price = 499.5,
-                            Stock = 3
-                        },
+            var authors = new List<Author>();
 
+            String filename = "./Seeds/books.json";
+            BookFromJSON myBooks = new Helpers.JSONHelper().JSON_File_To_Object<BookFromJSON>(filename);
+
+            foreach(BookFromJSON book in myBooks.books)
+            {
+                if(authors.Count == 0)
+                {
+                    AddAuthorFromBook(ref authors, book);
+                }
+                else
+                {
+                    bool found = false;
+                    int i = 0;
+                    while(i < authors.Count && found == false)
+                    {
+                        if(authors.ElementAt(i).AuthorName == book.Author)
+                        {
+                            found = true;
+                            continue;
+                        }
+                        i++;
+                    }
+                    if(found)
+                    {
+                        authors.ElementAt(i).Book.Add(new Book()
+                        {
+                            Title = book.Title,
+                            Price = book.Price,
+                            Stock = book.InStock
+                        });
+                    }
+                    else
+                    {
+                        AddAuthorFromBook(ref authors, book);
                     }
                 }
-            };
+            }
 
             context.Authors.AddRange(authors);
             context.SaveChanges();
