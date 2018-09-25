@@ -15,26 +15,26 @@ namespace Bookstore.APP.Controllers
     {
         #region Index
         // GET: Book
-        public ActionResult Index(string search_param, string x)
+        public ActionResult Index(string search_param, string str)
         {
             HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("https://localhost:44315/");
+            client.BaseAddress = new Uri("http://localhost:54525/");
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             var apiRoute = "api/authors/books";
 
-            if (x != null && x.Trim() != "")
+            if (str != null && str.Trim() != "")
             {
                 if (search_param == "title")
                 {
-                    apiRoute = "api/authors/books/search/title/" + x;
+                    apiRoute = "api/authors/books/search/title/" + str;
                 }
                 else if (search_param == "author")
                 {
-                    apiRoute = "api/authors/books/search/author/" + x;
+                    apiRoute = "api/authors/books/search/author/" + str;
                 }
                 else if (search_param == "all")
                 {
-                    apiRoute = "api/authors/books/search/all/" + x;
+                    apiRoute = "api/authors/books/search/all/" + str;
                 }
             }
 
@@ -43,7 +43,7 @@ namespace Bookstore.APP.Controllers
             var book = response.Content.ReadAsAsync<IEnumerable<ApiBook>>().Result;
             BookPageModel bpm = new BookPageModel();
             bpm.ApiBooks = book;
-            bpm.searchTerm = x;
+            bpm.searchTerm = str;
             bpm.searchType = search_param;
 
             return View(bpm);

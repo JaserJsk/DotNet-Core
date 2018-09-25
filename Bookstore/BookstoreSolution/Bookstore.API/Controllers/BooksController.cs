@@ -43,7 +43,7 @@ namespace Bookstore.API.Controllers
             }
             catch (Exception ex)
             {
-                //_logger.LogInformation($"Exeption while getting all books from all authors", ex);
+                _logger.LogInformation($"Exeption while getting all books from all authors", ex);
                 return StatusCode(500, "A problem happend while handeling your request.");
             }
         }
@@ -69,7 +69,7 @@ namespace Bookstore.API.Controllers
             }
             catch (Exception ex)
             {
-                //_logger.LogInformation($"Exeption while getting book for author with id {authorid}.", ex);
+                _logger.LogInformation($"Exeption while getting book for author with id {authorid}.", ex);
                 return StatusCode(500, "A problem happend while handeling your request.");
             }
         }
@@ -89,7 +89,7 @@ namespace Bookstore.API.Controllers
             }
             catch (Exception ex)
             {
-                //_logger.LogInformation($"Exeption while getting all books from all authors", ex);
+                _logger.LogInformation($"Exeption while getting all books from all authors", ex);
                 return StatusCode(500, "A problem happend while handeling your request.");
             }
         }
@@ -109,7 +109,7 @@ namespace Bookstore.API.Controllers
             }
             catch (Exception ex)
             {
-                //_logger.LogInformation($"Exeption while getting all books from all authors", ex);
+                _logger.LogInformation($"Exeption while getting all books from all authors", ex);
                 return StatusCode(500, "A problem happend while handeling your request.");
             }
         }
@@ -129,7 +129,7 @@ namespace Bookstore.API.Controllers
             }
             catch (Exception ex)
             {
-                //_logger.LogInformation($"Exeption while getting all books from all authors", ex);
+                _logger.LogInformation($"Exeption while getting all books from all authors", ex);
                 return StatusCode(500, "A problem happend while handeling your request.");
             }
         }
