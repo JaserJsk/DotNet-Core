@@ -15,9 +15,9 @@ namespace Bookstore.API
         private static void AddAuthorFromBook(ref List<Author> authors, BookFromJSON book)
         {
             /*
-             * Add new author from Book - Book object contains author data
-             * Here book object is the version read from JSON, with original structure, but
-             * it is saved in the format used by the API - classes Author and Book. */
+             * Adding new author from Book - Book object contains author data
+             * Here book object is the version read from JSON, with original structure,
+             * but it is saved in the format used by the API - classes Author and Book. */
             authors.Add(new Author()
             {
                 // Fetch author name
@@ -96,7 +96,6 @@ namespace Bookstore.API
             // Update context to save all changes with authors
             context.Authors.AddRange(authors);
             context.SaveChanges();
-
         }
     }
 }
