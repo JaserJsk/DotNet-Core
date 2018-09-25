@@ -18,7 +18,7 @@ namespace Bookstore.APP.Controllers
         public ActionResult Index(string search_param, string str)
         {
             HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("http://localhost:54525/");
+            client.BaseAddress = new Uri("http://localhost:50834/");
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             var apiRoute = "api/authors/books";
 
