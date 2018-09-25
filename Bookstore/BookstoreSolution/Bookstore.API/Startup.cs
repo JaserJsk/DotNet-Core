@@ -63,7 +63,7 @@ namespace Bookstore.API
         {
             //loggerFactory.AddConsole();
             //loggerFactory.AddDebug();
-            loggerFactory.AddNLog();
+            //loggerFactory.AddNLog();
 
             if (env.IsDevelopment())
             {
