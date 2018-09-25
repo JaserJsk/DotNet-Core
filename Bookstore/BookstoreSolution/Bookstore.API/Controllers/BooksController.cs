@@ -23,7 +23,7 @@ namespace Bookstore.API.Controllers
             IMailService mailService,
             IBookRepository bookRepository)
         {
-            _logger = logger;
+            //_logger = logger;
             _mailService = mailService;
             _bookRepository = bookRepository;
         }
@@ -43,7 +43,7 @@ namespace Bookstore.API.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogInformation($"Exeption while getting all books from all authors", ex);
+                //_logger.LogInformation($"Exeption while getting all books from all authors", ex);
                 return StatusCode(500, "A problem happend while handeling your request.");
             }
         }
@@ -57,7 +57,7 @@ namespace Bookstore.API.Controllers
             {
                 if (!_bookRepository.AuthorExists(authorid))
                 {
-                    _logger.LogInformation($"Author with id {authorid} was not found when accessing books.");
+                    //_logger.LogInformation($"Author with id {authorid} was not found when accessing books.");
                     return NotFound();
                 }
 
@@ -69,7 +69,7 @@ namespace Bookstore.API.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogInformation($"Exeption while getting book for author with id {authorid}.", ex);
+                //_logger.LogInformation($"Exeption while getting book for author with id {authorid}.", ex);
                 return StatusCode(500, "A problem happend while handeling your request.");
             }
         }
@@ -89,7 +89,7 @@ namespace Bookstore.API.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogInformation($"Exeption while getting all books from all authors", ex);
+                //_logger.LogInformation($"Exeption while getting all books from all authors", ex);
                 return StatusCode(500, "A problem happend while handeling your request.");
             }
         }
@@ -109,7 +109,7 @@ namespace Bookstore.API.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogInformation($"Exeption while getting all books from all authors", ex);
+                //_logger.LogInformation($"Exeption while getting all books from all authors", ex);
                 return StatusCode(500, "A problem happend while handeling your request.");
             }
         }
@@ -129,7 +129,7 @@ namespace Bookstore.API.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogInformation($"Exeption while getting all books from all authors", ex);
+                //_logger.LogInformation($"Exeption while getting all books from all authors", ex);
                 return StatusCode(500, "A problem happend while handeling your request.");
             }
         }
