@@ -16,7 +16,7 @@ namespace Bookstore.APP.Models
         public ApiGetBooks()
         {
             HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("http://localhost:50834/");
+            client.BaseAddress = new Uri("http://localhost:61778/");
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             var apiRoute = "api/authors/books";
             HttpResponseMessage response = client.GetAsync(apiRoute).Result;

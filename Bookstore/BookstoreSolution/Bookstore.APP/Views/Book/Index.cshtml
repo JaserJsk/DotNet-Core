@@ -169,16 +169,16 @@
     <script type="text/javascript">
 
         $(".addtocart").click(function (event) {
-            var origel = $(event.target)[0];
-            var el = origel;
-            if (!(origel.nodeName.toLowerCase() === "button")) {
+            var original = $(event.target)[0];
+            var el = original;
+            if (!(original.nodeName.toLowerCase() === "button")) {
                 el = $(event.target)[0].parentElement;
             }
             var cnt = parseInt(el.getAttribute("bookid"));
-            var url = '/Cart/Reserve?author=' + el.getAttribute("bookauthor") + "&title=" + el.getAttribute("booktitle") + "&count=" + $('.addtocartcount')[cnt].value;
+            var url = '/Cart/Reserve?author=' + el.getAttribute("bookauthor")
+                + "&title=" + el.getAttribute("booktitle") + "&count=" + $('.addtocartcount')[cnt].value;
             window.location.href = url;
         });
 
     </script>
 }
-

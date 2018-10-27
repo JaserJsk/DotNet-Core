@@ -11,11 +11,11 @@ namespace BookCommerce.APP.Controllers
     public class BookController : Controller
     {
         #region Index
-        // GET: Books
+        // GET: Book
         public ActionResult Index(string search_param, string str)
         {
             HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("https://localhost:44394/");
+            client.BaseAddress = new Uri("http://localhost:61698/");
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             var apiRoute = "api/authors/books";
 
@@ -48,7 +48,7 @@ namespace BookCommerce.APP.Controllers
         #endregion
 
         #region Details
-        // GET: Books/Details/5
+        // GET: Book/Details/5
         public ActionResult Details(int id)
         {
             return View();
@@ -56,7 +56,7 @@ namespace BookCommerce.APP.Controllers
         #endregion
 
         #region Create
-        // GET: Books/Create
+        // GET: Book/Create
         public ActionResult Create()
         {
             return View();
@@ -64,7 +64,7 @@ namespace BookCommerce.APP.Controllers
         #endregion
 
         #region Create
-        // POST: Books/Create
+        // POST: Book/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(IFormCollection collection)
@@ -83,7 +83,7 @@ namespace BookCommerce.APP.Controllers
         #endregion
 
         #region Edit
-        // GET: Books/Edit/5
+        // GET: Book/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
@@ -91,7 +91,7 @@ namespace BookCommerce.APP.Controllers
         #endregion
 
         #region Edit
-        // POST: Books/Edit/5
+        // POST: Book/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -110,7 +110,7 @@ namespace BookCommerce.APP.Controllers
         #endregion
 
         #region Delete
-        // GET: Books/Delete/5
+        // GET: Book/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
@@ -118,7 +118,7 @@ namespace BookCommerce.APP.Controllers
         #endregion
 
         #region Delete
-        // POST: Books/Delete/5
+        // POST: Book/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)

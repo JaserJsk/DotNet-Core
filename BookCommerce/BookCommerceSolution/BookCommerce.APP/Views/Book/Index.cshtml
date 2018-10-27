@@ -73,9 +73,9 @@
                         <th>
                             Stock
                         </th>
-                        <th>
+                        @*<th>
                             Date
-                        </th>
+                        </th>*@
                         <th></th>
                     </tr>
                 </thead>
@@ -108,9 +108,9 @@
                             <td>
                                 @Html.DisplayFor(modelItem => item.Stock)
                             </td>
-                            <td>
+                            @*<td>
                                 @item.PublishingDate.ToShortDateString()
-                            </td>
+                            </td>*@
                             <td>
                                 @{
                                     theid = "added" + item.Id;
@@ -162,6 +162,7 @@
                                 </script>
 
                             </td>
+
                             @{
                                 index++;
                                 n = pref + index;
@@ -189,7 +190,8 @@
                 el = $(event.target)[0].parentElement;
             }
             var cnt = parseInt(el.getAttribute("bookid"));
-            var url = '/Cart/Reserve?author=' + el.getAttribute("bookauthor") + "&title=" + el.getAttribute("booktitle") + "&count=" + $('.addtocartcount')[cnt].value;
+            var url = '/Cart/Reserve?author=' + el.getAttribute("bookauthor")
+                + "&title=" + el.getAttribute("booktitle") + "&count=" + $('.addtocartcount')[cnt].value;
             window.location.href = url;
         });
 
