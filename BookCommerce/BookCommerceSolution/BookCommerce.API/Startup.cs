@@ -20,7 +20,7 @@ namespace BookCommerce.API
 
         public Startup(IConfiguration configuration)
         {
-            // Adding the field Instances to the injected Instances.
+            // Adding the field Instances to the injected Instance.
             Configuration = configuration;
         }
 
