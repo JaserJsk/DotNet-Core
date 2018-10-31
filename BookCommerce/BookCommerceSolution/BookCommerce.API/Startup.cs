@@ -63,6 +63,7 @@ namespace BookCommerce.API
 
             // Setting the connectionstring
             var connectionString = Startup.Configuration["connectionStrings:BookCommerceDBConnectionString"];
+            // By default Scoped lifecycle will be used for DbContext.
             services.AddDbContext<ApplicationContext>(o => o.UseSqlServer(connectionString));
 
             services.AddScoped<IBookCommerceRepository, BookCommerceRepository>();
@@ -70,6 +71,7 @@ namespace BookCommerce.API
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory,
+            /* Adding an instance of the ApplicationContext with dependency injection. */
             ApplicationContext applicationContext)
         {
             // This will log to the console window.
