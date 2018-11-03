@@ -1,8 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BookCommerce.API.Entities
 {
@@ -17,7 +13,7 @@ namespace BookCommerce.API.Entities
             /*
              * Use this approach if need to use migrations.
              * When there is no database, open "Package Manager Console" and type:
-             * PM> Add-Migration InitialMigration.
+             * PM> "Add-Migration InitialMigration".
              */
 
             // This will enable automatic migrations.
