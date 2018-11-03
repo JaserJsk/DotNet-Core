@@ -51,7 +51,7 @@ namespace BookCommerce.API
                     /* 
                      * Use function defined above, authors passed as "ref" because its value changes and -
                      * we need the changes after the function was already executed (AddAuthorFromBook) 
-                    */
+                     */
                     AddAuthorFromBook(ref _authors, book);
                 }
                 else
