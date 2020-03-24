@@ -1,1 +1,1 @@
-.NET Core Projects Created By Jonas Jsk [Jonas.Jsk@outlook.com]
+.NET Core Projects Created By Jaser Jsk [Jaser.Jsk@gmail.com]
